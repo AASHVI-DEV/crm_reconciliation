@@ -1,19 +1,19 @@
 {
-  "Care that feels like family.For over two decades, Bellhaven Senior Living has provided assisted living, memory support, and short": {
+  "BellhavenSenior Living": {
     "status": "PENDING",
     "action": "CREATE",
     "payload": {
-      "name": "Care that feels like family.For over two decades, Bellhaven Senior Living has provided assisted living, memory support, and short",
+      "name": "BellhavenSenior Living",
       "parent_id": null,
       "status": "Active"
     },
     "reason": "No confident match (Score: 0%)."
   },
-  "New this year:we're delighted ": {
+  "Bellhaven Meadows of Findlay": {
     "status": "PENDING",
     "action": "CREATE",
     "payload": {
-      "name": "New this year:we're delighted ",
+      "name": "Bellhaven Meadows of Findlay",
       "parent_id": null,
       "status": "Active"
     },
