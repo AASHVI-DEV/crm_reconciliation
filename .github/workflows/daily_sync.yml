@@ -1,0 +1,36 @@
+﻿name: Daily CRM Synchronization
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 rapidfuzz
+
+      - name: Execute Reconciliation Logic
+        run: |
+          python reconcile.py
+
+      - name: Commit pipeline changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add pipeline_db.json
+          git commit -m "Auto-update pipeline database" || exit 0
+          git push
