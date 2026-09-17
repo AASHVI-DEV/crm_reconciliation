@@ -1,22 +1,22 @@
 {
   "BellhavenSenior Living": {
-    "status": "APPROVED",
-    "action": "UPDATE",
+    "status": "PENDING",
+    "action": "NO_CHANGE",
     "crm_account_id": null,
     "payload": {
       "name": "BellhavenSenior Living",
       "status": "Active"
     },
-    "reason": "Direct update allowed (Score: 70.96774193548387%)."
+    "reason": "Confident match with 'BellhavenSenior Living' (Score: 100.0%)."
   },
   "Bellhaven Meadows of Findlay": {
-    "status": "APPROVED",
+    "status": "PENDING",
     "action": "NO_CHANGE",
     "crm_account_id": null,
     "payload": {
       "name": "Bellhaven Meadows of Findlay",
       "status": "Active"
     },
-    "reason": "Matched with 'Bellhaven Meadows of Findlay' (Score: 100.0%)."
+    "reason": "Confident match with 'Bellhaven Meadows of Findlay' (Score: 100.0%)."
   }
 }
