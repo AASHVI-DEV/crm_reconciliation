@@ -1,10 +1,12 @@
-﻿import requests
+﻿import os
 import json
+import requests
 from scraper import scrape_locations
 from rapidfuzz import fuzz
 
 API_BASE = "https://analyst-assessment-production.up.railway.app/api/v1"
-HEADERS = {"Authorization": "Bearer bh_lCSyghnRNXlOjPrHHEM--A"}
+API_TOKEN = os.getenv("CRM_API_TOKEN", "bh_lCSyghnRNXlOjPrHHEM--A")
+HEADERS = {"Authorization": f"Bearer {API_TOKEN}"}
 
 def fetch_crm_accounts():
     response = requests.get(f"{API_BASE}/accounts", headers=HEADERS)
@@ -41,12 +43,10 @@ def run_reconciliation():
             if score > best_score:
                 best_score = score
                 best_match = acc
-                
-        if best_match:
-            matched_crm_ids.add(best_match.get("id"))
 
-        # Category A: Confident Match (>85%)
+        # Category A: Confident Match (>= 85%)
         if best_score >= 85 and best_match:
+            matched_crm_ids.add(best_match.get("id"))
             proposals[name] = {
                 "status": "PENDING",
                 "action": "NO_CHANGE" if best_match.get("name") == name else "UPDATE",
@@ -56,6 +56,7 @@ def run_reconciliation():
             }
         # Category B: Match Needs Fix / CHOW SOP (50% - 84%)
         elif best_score >= 50 and best_match:
+            matched_crm_ids.add(best_match.get("id"))
             rev = best_match.get("lifetime_revenue", 0) or 0
             ar = best_match.get("outstanding_ar", 0) or 0
             
@@ -84,7 +85,7 @@ def run_reconciliation():
                 "reason": f"New location found on website. No confident CRM match (Best Score: {best_score}%)."
             }
 
-    # 2. Category D: Flag Bellhaven CRM Accounts Missing from Website / Duplicate Check
+    # 2. Category D: Flag Bellhaven CRM Accounts Missing from Website
     for acc in crm_accounts:
         if not isinstance(acc, dict):
             continue
@@ -96,7 +97,10 @@ def run_reconciliation():
                 "status": "PENDING",
                 "action": "MARK_INACTIVE_OR_DUPLICATE",
                 "crm_account_id": acc_id,
-                "payload": {"status": "Needs Review", "notes": "Account exists in CRM under Bellhaven but no longer appears on website."},
+                "payload": {
+                    "status": "Needs Review",
+                    "notes": "Account exists in CRM under Bellhaven but no longer appears on website."
+                },
                 "reason": f"Account '{acc_name}' exists in CRM under Bellhaven but no longer appears on the live website."
             }
 
