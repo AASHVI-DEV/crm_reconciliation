@@ -1,6 +1,6 @@
 {
   "BellhavenSenior Living": {
-    "status": "APPROVED",
+    "status": "PENDING",
     "action": "NO_CHANGE",
     "crm_account_id": null,
     "payload": {
@@ -10,7 +10,7 @@
     "reason": "Confident match with 'BellhavenSenior Living' (Score: 100.0%)."
   },
   "Bellhaven Meadows of Findlay": {
-    "status": "APPROVED",
+    "status": "PENDING",
     "action": "NO_CHANGE",
     "crm_account_id": null,
     "payload": {
